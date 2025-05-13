@@ -26,6 +26,7 @@ export type State = {
   __transitionCallback?: () => void;
   __activeStagePosition?: StageDefinition;
   __overlaySvg?: SVGSVGElement;
+  __container?: HTMLElement;
 };
 
 let currentState: State = {};

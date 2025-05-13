@@ -165,7 +165,26 @@ export function driver(options: Config = {}): Driver {
     }
 
     setState("isInitialized", true);
-    document.body.classList.add("driver-active", getConfig("animate") ? "driver-fade" : "driver-simple");
+    
+    // 获取配置的容器节点
+    let container = getConfig("container");
+    
+    // 如果容器是字符串选择器，则转换为 DOM 元素
+    if (typeof container === "string") {
+      const containerElement = document.querySelector(container);
+      if (!containerElement) {
+        console.error(`找不到容器元素: ${container}，将使用 document.body`);
+        container = document.body;
+      } else {
+        container = containerElement as HTMLElement;
+      }
+    }
+    
+    // 保存容器元素到状态中，供后续使用
+    setState("__container", container);
+    
+    // 将样式类添加到容器元素上，而不是直接使用 document.body
+    (container as HTMLElement).classList.add("driver-active", getConfig("animate") ? "driver-fade" : "driver-simple");
 
     initEvents();
 
@@ -275,7 +294,8 @@ export function driver(options: Config = {}): Driver {
     const onDeselected = activeStep?.onDeselected || getConfig("onDeselected");
     const onDestroyed = getConfig("onDestroyed");
 
-    document.body.classList.remove("driver-active", "driver-fade", "driver-simple");
+    const container = getState("__container");
+    (container as HTMLElement).classList.remove("driver-active", "driver-fade", "driver-simple");
 
     destroyEvents();
     destroyPopover();

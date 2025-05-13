@@ -12,6 +12,7 @@ function mountDummyElement(): Element {
   }
 
   let element = document.createElement("div");
+  const container = getState("__container") as HTMLElement || document.body;
 
   element.id = "driver-dummy-element";
   element.style.width = "0";
@@ -22,7 +23,7 @@ function mountDummyElement(): Element {
   element.style.top = "50%";
   element.style.left = "50%";
 
-  document.body.appendChild(element);
+  container.appendChild(element);
 
   return element;
 }

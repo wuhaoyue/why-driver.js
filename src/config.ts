@@ -19,6 +19,7 @@ export type Config = {
   overlayClickBehavior?: "close" | "nextStep";
   stagePadding?: number;
   stageRadius?: number;
+  container?: HTMLElement | string;
 
   disableActiveInteraction?: boolean;
 
@@ -71,6 +72,7 @@ export function configure(config: Config = {}) {
     showButtons: ["next", "previous", "close"],
     disableButtons: [],
     overlayColor: "#000",
+    container: document.body,
     ...config,
   };
 }

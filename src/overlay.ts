@@ -75,7 +75,8 @@ export function refreshOverlay() {
 
 function mountOverlay(stagePosition: StageDefinition) {
   const overlaySvg = createOverlaySvg(stagePosition);
-  document.body.appendChild(overlaySvg);
+  const container = getState("__container") as HTMLElement || document.body;
+  container.appendChild(overlaySvg);
 
   onDriverClick(overlaySvg, e => {
     const target = e.target as SVGElement;
